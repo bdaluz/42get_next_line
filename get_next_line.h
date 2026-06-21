@@ -6,7 +6,7 @@
 /*   By: bda-luz- <bda-luz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 13:45:59 by bda-luz-          #+#    #+#             */
-/*   Updated: 2026/06/20 14:57:16 by bda-luz-         ###   ########.fr       */
+/*   Updated: 2026/06/20 20:40:19 by bda-luz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # endif
 
 char	*get_next_line(int fd);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_substr_gnl(char const *s, unsigned int start, size_t len);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strclen_gnl(const char *s, char c);
