@@ -6,7 +6,7 @@
 /*   By: bda-luz- <bda-luz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 13:45:59 by bda-luz-          #+#    #+#             */
-/*   Updated: 2026/06/22 16:15:21 by bda-luz-         ###   ########.fr       */
+/*   Updated: 2026/06/23 15:48:35 by bda-luz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,21 @@
 #  define BUFFER_SIZE 42
 # endif
 
+typedef struct s_frag
+{
+	char			*content;
+	struct s_frag	*next;
+}					t_frag;
+
+typedef struct s_file
+{
+	int				fd;
+	t_frag			*fragments;
+	struct s_file	*next;
+}					t_file;
+
 char	*get_next_line(int fd);
+int		has_newline(t_frag *fragments);
+size_t	linelen(t_frag *fragments);
 
 #endif
