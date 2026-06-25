@@ -6,13 +6,13 @@
 /*   By: bda-luz- <bda-luz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 11:45:43 by bda-luz-          #+#    #+#             */
-/*   Updated: 2026/06/23 21:32:29 by bda-luz-         ###   ########.fr       */
+/*   Updated: 2026/06/24 21:17:53 by bda-luz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-static t_frag	*get_after_newline(char *s)
+static t_frag	*ft_get_after_newline(char *s)
 {
 	size_t	i;
 	t_frag	*new_node;
@@ -40,18 +40,29 @@ static t_frag	*get_after_newline(char *s)
 	return (new_node);
 }
 
-void	clean_fragments(t_file *file)
+void	ft_clean_fragments(t_file *file)
 {
 	t_frag	*current;
 	t_frag	*next;
-	char	*new_content;
+	t_frag	*new_node;
 
+	if (!file || !file->fragments)
+		return ;
 	current = file->fragments;
 	while (current->next)
 		current = current->next;
+	new_node = ft_get_after_newline(current->content);
+	while (file->fragments)
+	{
+		next = file->fragments->next;
+		free(file->fragments->content);
+		free(file->fragments);
+		file->fragments = next;
+	}
+	file->fragments = new_node;
 }
 
-size_t	linelen(t_frag *fragments)
+size_t	ft_linelen(t_frag *fragments)
 {
 	size_t	i;
 	size_t	j;
@@ -75,7 +86,7 @@ size_t	linelen(t_frag *fragments)
 	return (i);
 }
 
-int	has_newline(t_frag *fragments)
+int	ft_has_newline(t_frag *fragments)
 {
 	size_t	i;
 

@@ -6,7 +6,7 @@
 /*   By: bda-luz- <bda-luz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 11:26:04 by bda-luz-          #+#    #+#             */
-/*   Updated: 2026/06/23 16:18:23 by bda-luz-         ###   ########.fr       */
+/*   Updated: 2026/06/24 21:17:43 by bda-luz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*extract_line(t_file *file)
 	char	*str;
 
 	fragments = file->fragments;
-	line_len = linelen(fragments);
+	line_len = ft_linelen(fragments);
 	if (line_len == 0)
 		return (NULL);
 	str = malloc(sizeof(char) * (line_len + 1));
@@ -86,12 +86,12 @@ static t_frag	*append_fragment(t_file *file, char *buffer)
 	return (new_node);
 }
 
-static int	build_fragment_list(int fd, t_file **files, int bytes_read)
+static int	build_fragment_list(int fd, t_file *files, int bytes_read)
 {
 	char	*buffer;
 	t_frag	*new_frag;
 
-	if (has_newline((*files)->fragments))
+	if (ft_has_newline(files->fragments))
 		return (1);
 	while (bytes_read > 0)
 	{
@@ -105,10 +105,10 @@ static int	build_fragment_list(int fd, t_file **files, int bytes_read)
 			break ;
 		}
 		buffer[bytes_read] = '\0';
-		new_frag = append_fragment(*files, buffer);
+		new_frag = append_fragment(files, buffer);
 		if (!new_frag)
 			return (0);
-		if (has_newline(new_frag))
+		if (ft_has_newline(new_frag))
 			break ;
 	}
 	return (bytes_read >= 0);
@@ -116,4 +116,21 @@ static int	build_fragment_list(int fd, t_file **files, int bytes_read)
 
 char	*get_next_line(int fd)
 {
+	static t_file	*open_files = NULL;
+	t_file			*current_file;
+	char			*str;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	current_file = get_file(fd, &open_files);
+	if (!current_file)
+		return (NULL);
+	str = NULL;
+	if (!build_fragment_list(fd, current_file, 1))
+		return (NULL);
+	str = extract_line(current_file);
+	if (!str)
+		return (NULL);
+	ft_clean_fragments(current_file);
+	return (str);
 }
