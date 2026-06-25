@@ -6,7 +6,7 @@
 /*   By: bda-luz- <bda-luz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 11:45:43 by bda-luz-          #+#    #+#             */
-/*   Updated: 2026/06/24 21:17:53 by bda-luz-         ###   ########.fr       */
+/*   Updated: 2026/06/24 21:53:00 by bda-luz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,35 @@ static t_frag	*ft_get_after_newline(char *s)
 	new_node->content = new_content;
 	new_node->next = NULL;
 	return (new_node);
+}
+
+void	ft_remove_file(t_file **files, int fd)
+{
+	t_file	*current;
+	t_file	*previous;
+	t_frag	*tmp;
+
+	current = *files;
+	previous = NULL;
+	while (current && current->fd != fd)
+	{
+		previous = current;
+		current = current->next;
+	}
+	if (!current)
+		return ;
+	if (previous)
+		previous->next = current->next;
+	else
+		*files = current->next;
+	while (current->fragments)
+	{
+		tmp = current->fragments->next;
+		free(current->fragments->content);
+		free(current->fragments);
+		current->fragments = tmp;
+	}
+	free(current);
 }
 
 void	ft_clean_fragments(t_file *file)

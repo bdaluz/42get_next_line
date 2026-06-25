@@ -6,7 +6,7 @@
 /*   By: bda-luz- <bda-luz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 13:45:59 by bda-luz-          #+#    #+#             */
-/*   Updated: 2026/06/24 20:58:27 by bda-luz-         ###   ########.fr       */
+/*   Updated: 2026/06/24 21:54:13 by bda-luz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ char	*get_next_line(int fd);
 int		ft_has_newline(t_frag *fragments);
 size_t	ft_linelen(t_frag *fragments);
 void	ft_clean_fragments(t_file *file);
+void	ft_remove_file(t_file **files, int fd);
 
 #endif
