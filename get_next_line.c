@@ -6,7 +6,7 @@
 /*   By: bda-luz- <bda-luz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/25 12:58:59 by bda-luz-          #+#    #+#             */
-/*   Updated: 2026/06/25 18:39:34 by bda-luz-         ###   ########.fr       */
+/*   Updated: 2026/06/25 23:30:31 by bda-luz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static char	*get_line(t_list *list)
 static t_list	*append_or_create(t_list **list, char *buffer)
 {
 	t_list	*new_node;
-	t_list	*current;
 
 	new_node = malloc(sizeof(t_list));
 	if (!new_node)
@@ -54,15 +53,12 @@ static t_list	*append_or_create(t_list **list, char *buffer)
 	}
 	new_node->fragment = buffer;
 	new_node->next = NULL;
+	new_node->tail = NULL;
 	if (!*list)
-	{
 		*list = new_node;
-		return (new_node);
-	}
-	current = *list;
-	while (current->next)
-		current = current->next;
-	current->next = new_node;
+	else
+		(*list)->tail->next = new_node;
+	(*list)->tail = new_node;
 	return (new_node);
 }
 

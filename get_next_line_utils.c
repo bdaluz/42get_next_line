@@ -6,7 +6,7 @@
 /*   By: bda-luz- <bda-luz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/25 12:59:08 by bda-luz-          #+#    #+#             */
-/*   Updated: 2026/06/25 18:38:06 by bda-luz-         ###   ########.fr       */
+/*   Updated: 2026/06/25 23:31:01 by bda-luz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,21 +81,18 @@ static t_list	*ft_get_after_newline(char *fragment)
 	str[i - 1] = '\0';
 	new_node->fragment = str;
 	new_node->next = NULL;
+	new_node->tail = NULL;
 	return (new_node);
 }
 
 void	ft_free_fragments(t_list **list)
 {
 	t_list	*new_node;
-	t_list	*current;
 	t_list	*next;
 
 	if (!list || !*list || !(*list)->fragment)
 		return ;
-	current = *list;
-	while (current->next)
-		current = current->next;
-	new_node = ft_get_after_newline(current->fragment);
+	new_node = ft_get_after_newline((*list)->tail->fragment);
 	while (*list)
 	{
 		next = (*list)->next;
@@ -104,4 +101,6 @@ void	ft_free_fragments(t_list **list)
 		*list = next;
 	}
 	*list = new_node;
+	if (*list)
+		(*list)->tail = new_node;
 }

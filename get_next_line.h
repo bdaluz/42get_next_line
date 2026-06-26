@@ -6,7 +6,7 @@
 /*   By: bda-luz- <bda-luz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 13:45:59 by bda-luz-          #+#    #+#             */
-/*   Updated: 2026/06/25 18:11:34 by bda-luz-         ###   ########.fr       */
+/*   Updated: 2026/06/25 23:18:40 by bda-luz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_list
 {
 	char			*fragment;
 	struct s_list	*next;
+	struct s_list	*tail;
 }					t_list;
 
 void	ft_free_fragments(t_list **list);

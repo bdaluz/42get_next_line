@@ -6,7 +6,7 @@
 /*   By: bda-luz- <bda-luz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 13:45:59 by bda-luz-          #+#    #+#             */
-/*   Updated: 2026/06/24 21:54:13 by bda-luz-         ###   ########.fr       */
+/*   Updated: 2026/06/25 23:05:15 by bda-luz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_file
 {
 	int				fd;
 	t_frag			*fragments;
+	t_frag			*tail;
 	struct s_file	*next;
 }					t_file;
 

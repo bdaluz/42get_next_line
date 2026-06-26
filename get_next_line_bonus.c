@@ -6,7 +6,7 @@
 /*   By: bda-luz- <bda-luz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 11:26:04 by bda-luz-          #+#    #+#             */
-/*   Updated: 2026/06/24 22:02:27 by bda-luz-         ###   ########.fr       */
+/*   Updated: 2026/06/25 23:04:02 by bda-luz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static t_file	*get_file(int fd, t_file **files)
 		return (NULL);
 	new_file->fd = fd;
 	new_file->fragments = NULL;
+	new_file->tail = NULL;
 	new_file->next = *files;
 	*files = new_file;
 	return (new_file);
@@ -64,7 +65,6 @@ static char	*extract_line(t_file *file)
 static t_frag	*append_fragment(t_file *file, char *buffer)
 {
 	t_frag	*new_node;
-	t_frag	*current;
 
 	new_node = malloc(sizeof(t_frag));
 	if (!new_node)
@@ -75,14 +75,10 @@ static t_frag	*append_fragment(t_file *file, char *buffer)
 	new_node->content = buffer;
 	new_node->next = NULL;
 	if (!file->fragments)
-	{
 		file->fragments = new_node;
-		return (new_node);
-	}
-	current = file->fragments;
-	while (current->next)
-		current = current->next;
-	current->next = new_node;
+	else
+		file->tail->next = new_node;
+	file->tail = new_node;
 	return (new_node);
 }
 

@@ -6,7 +6,7 @@
 /*   By: bda-luz- <bda-luz-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 11:45:43 by bda-luz-          #+#    #+#             */
-/*   Updated: 2026/06/24 21:53:00 by bda-luz-         ###   ########.fr       */
+/*   Updated: 2026/06/25 23:07:00 by bda-luz-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,12 @@ void	ft_remove_file(t_file **files, int fd)
 
 void	ft_clean_fragments(t_file *file)
 {
-	t_frag	*current;
 	t_frag	*next;
 	t_frag	*new_node;
 
 	if (!file || !file->fragments)
 		return ;
-	current = file->fragments;
-	while (current->next)
-		current = current->next;
-	new_node = ft_get_after_newline(current->content);
+	new_node = ft_get_after_newline(file->tail->content);
 	while (file->fragments)
 	{
 		next = file->fragments->next;
@@ -89,6 +85,7 @@ void	ft_clean_fragments(t_file *file)
 		file->fragments = next;
 	}
 	file->fragments = new_node;
+	file->tail = new_node;
 }
 
 size_t	ft_linelen(t_frag *fragments)
