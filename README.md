@@ -75,3 +75,19 @@ AI tools were used for:
 
 - Clarifying function specifications and expected behavior.
 - Assisting with the creation of this readme.
+
+## Algorithm Explanation & Justification
+
+This project utilizes a **Linked List architecture integrated with a Tail Pointer** to manage memory and buffer reads dynamically.
+
+**The Problem (Why not string concatenation?):**
+The most common approach to solving the *Get Next Line* problem is to read chunks of a file and continuously concatenate them using a function like `strjoin` (you can check the "old-main" branch with this version). However, this introduces a severe performance bottleneck. With small buffer sizes (e.g., `BUFFER_SIZE=1`), appending to a string requires allocating a new, larger block of memory and copying the entire history of previously read characters over and over. This results in an inefficient time complexity of $O(N^2)$. 
+
+**The Solution:**
+To bypass this limitation, this algorithm entirely avoids intermediate concatenations. Instead, every time a new buffer is read, it is simply stored inside a new node of a linked list. The characters are only consolidated into a single, contiguous string at the very end, exactly once, when a newline (`\n`) or EOF is encountered. 
+
+**The Tail Pointer Optimization:**
+While a standard linked list prevents continuous memory copying, appending a new node normally requires traversing the entire list to find the end, which would still create an $O(N)$ bottleneck per read operation. To solve this, a **tail pointer** is maintained to track the last node. This allows the algorithm to append new buffer nodes instantly, achieving an $O(1)$ insertion time regardless of the list's size.
+
+**Conclusion:**
+By combining a linked list with a tail pointer, the algorithm executes lightning-fast reads with a final time complexity of $O(N)$. It drastically reduces system calls (`malloc`) and memory copies, proving exceptionally resilient and fast even when processing massive files byte-by-byte.
